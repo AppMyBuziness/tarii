@@ -91,7 +91,7 @@
     <h1>My Purple App</h1>
     <nav>
         <a href="index.html" onclick="showPage('dashboard')">Dashboard</a>
-        <a href="#td.html" onclick="showPage('diary')">My Diary</a>
+        <a href="td.html" onclick="showPage('diary')">My Diary</a>
         <a href="event.html" onclick="showPage('affirmations')">events</a>
         <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
         <a href="bk.html" onclick="showPage('books')">Books</a>
@@ -112,19 +112,7 @@
 
 
 <script>
-    sessionStorage.setItem('username', 'User'); // Replace 'User' with the actual username
-
-    function showPage(page) {
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(p => p.style.display = 'none');
-        document.getElementById(page).style.display = 'block';
-    }
-
-    function displayWelcomeMessage() {
-        const username = sessionStorage.getItem('username') || 'User';
-        document.getElementById('welcomeMessage').innerText = `Hey ${username}, welcome!`;
-    }
-
+  
     function saveDiaryEntry() {
         const diaryInput = document.getElementById('diaryInput').value;
         const diaryEntries = JSON.parse(sessionStorage.getItem('diaryEntries')) || [];
@@ -150,73 +138,11 @@
         `).join('');
     }
 
-    function postAffirmation() {
-        const affirmationInput = document.getElementById('affirmationInput').value;
-        const affirmationsList = JSON.parse(sessionStorage.getItem('affirmations')) || [];
-        affirmationsList.push(affirmationInput);
-        sessionStorage.setItem('affirmations', JSON.stringify(affirmationsList));
-        loadAffirmations();
-        document.getElementById('affirmationInput').value = '';
-    }
-
-    function loadAffirmations() {
-        const affirmationsList = JSON.parse(sessionStorage.getItem('affirmations')) || [];
-        const affirmationsContainer = document.getElementById('affirmationsList');
-        affirmationsContainer.innerHTML = affirmationsList.map(affirmation => `<div class="message">${affirmation}</div>`).join('');
-    }
-
-    function sendMessage() {
-        const messageInput = document.getElementById('messageInput').value;
-        const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
-        messages.push(messageInput);
-        sessionStorage.setItem('messages', JSON.stringify(messages));
-        loadMessages();
-        document.getElementById('messageInput').value = '';
-    }
-
-    function loadMessages() {
-        const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
-        const messagesContainer = document.getElementById('messages');
-        messagesContainer.innerHTML = messages.map(message => `<div class="message">${message}</div>`).join('');
-    }
-
-    function sendPrivateMessage() {
-        const privateMessageInput = document.getElementById('privateMessageInput').value;
-        const privateMessages = JSON.parse(sessionStorage.getItem('privateMessages')) || [];
-        privateMessages.push(privateMessageInput);
-        sessionStorage.setItem('privateMessages', JSON.stringify(privateMessages));
-        loadPrivateMessages();
-        document.getElementById('privateMessageInput').value = '';
-    }
-
-    function loadPrivateMessages() {
-        const privateMessages = JSON.parse(sessionStorage.getItem('privateMessages')) || [];
-        const privateMessagesContainer = document.getElementById('privateMessages');
-        privateMessagesContainer.innerHTML = privateMessages.map(message => `<div class="message">${message}</div>`).join('');
-    }
-
-    function postVideo() {
-        const videoInput = document.getElementById('videoInput').value;
-        const videoList = JSON.parse(sessionStorage.getItem('videoList')) || [];
-        videoList.push(videoInput);
-        sessionStorage.setItem('videoList', JSON.stringify(videoList));
-        loadVideos();
-        document.getElementById('videoInput').value = '';
-    }
-
-    function loadVideos() {
-        const videoList = JSON.parse(sessionStorage.getItem('videoList')) || [];
-        const videoContainer = document.getElementById('videoList');
-        videoContainer.innerHTML = videoList.map(video => `<div class="video"><iframe width="100%" height="315" src="${video}" frameborder="0" allowfullscreen></iframe></div>`).join('');
-    }
-
+    
     // Load initial data
-    displayWelcomeMessage();
+   
     loadDiaryEntries();
-    loadAffirmations();
-    loadMessages();
-    loadPrivateMessages();
-    loadVideos();
+   
 </script>
 
 </body>
