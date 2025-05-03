@@ -113,7 +113,7 @@
     <h1>My Purple App</h1>
     <nav>
          <a href="index.html" onclick="showPage('dashboard')">Dashboard</a>
-        <a href="#td.html" onclick="showPage('diary')">My Diary</a>
+        <a href="td.html" onclick="showPage('diary')">My Diary</a>
         <a href="event.html" onclick="showPage('affirmations')">events</a>
         <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
         <a href="bk.html" onclick="showPage('books')">Books</a>
@@ -123,139 +123,31 @@
 
 <section id="dashboard" class="page">
     <h2 id="welcomeMessage"></h2>
-    <p>Let's talk!</p>
+    <p id="chatPrompt">Let's talk!</p>
     
     <h3>Chat</h3>
     <div class="chat-container">
-        <iframe src="https://giphy.com/embed/d0ClxexIeTBQL2XXDM" width="150" height="150" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pietvijverberg-orchidee-phalaenopsis-piet-vijverberg-d0ClxexIeTBQL2XXDM"></a></p>
-   
         <div id="messages"></div>
         <div>
             <textarea class="message-input" id="messageInput" placeholder="Type your message..."></textarea>
             <button class="send-button" onclick="sendMessage()">Send Message</button>
         </div>
     </div>
-
-    <h3>Affirmations Slideshow</h3>
-    <div class="slideshow-container">
-        <div class="slides" id="affirmationSlide"></div>
-    </div>
-</section>
-
-<section id="diary" class="page" style="display:none;">
-    <h2>My Diary</h2>
-    <textarea id="diaryInput" rows="5" placeholder="Write your diary entry..."></textarea>
-    <button onclick="saveDiary()">Save Entry</button>
-    <div id="diaryEntries"></div>
-</section>
-
-<section id="affirmations" class="page" style="display:none;">
-    <h2>Affirmations</h2>
-    <textarea class="affirmation-input" id="affirmationInput" placeholder="Write your affirmation..."></textarea>
-    <button onclick="postAffirmation()">Post Affirmation</button>
-    <div id="affirmationsList"></div>
-</section>
-
-<section id="one-on-one" class="page" style="display:none;">
-    <h2>One on One</h2>
-    <p>This section allows for private conversations.</p>
-    <div class="chat-container">
-        <div id="privateMessages"></div>
-        <div>
-            <textarea class="message-input" id="privateMessageInput" placeholder="Type your private message..."></textarea>
-            <button class="send-button" onclick="sendPrivateMessage()">Send Private Message</button>
-        </div>
-    </div>
-</section>
-
-<section id="books" class="page" style="display:none;">
-    <h2>Books</h2>
-    <p>List of recommended books will go here.</p>
-</section>
-
-<section id="videos" class="page" style="display:none;">
-    <h2>Videos</h2>
-    <input class="video-input" id="videoInput" type="url" placeholder="Enter video URL" />
-    <button onclick="postVideo()">Post Video</button>
-    <div id="videoList"></div>
 </section>
 
 <script>
-    sessionStorage.setItem('username', 'User'); // Replace 'User' with the actual username
-
-    function showPage(page) {
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(p => p.style.display = 'none');
-        document.getElementById(page).style.display = 'block';
-    }
-
     function displayWelcomeMessage() {
         const username = sessionStorage.getItem('username') || 'User';
         document.getElementById('welcomeMessage').innerText = `Hey ${username}, welcome!`;
-    }
-
-    function saveDiary() {
-        const diaryInput = document.getElementById('diaryInput').value;
-        const diaryEntries = JSON.parse(sessionStorage.getItem('diaryEntries')) || [];
-        diaryEntries.push(diaryInput);
-        sessionStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
-        loadDiaryEntries();
-        document.getElementById('diaryInput').value = '';
-    }
-
-    function loadDiaryEntries() {
-        const diaryEntries = JSON.parse(sessionStorage.getItem('diaryEntries')) || [];
-        const diaryEntriesContainer = document.getElementById('diaryEntries');
-        diaryEntriesContainer.innerHTML = diaryEntries.map(entry => `<div class="message">${entry}</div>`).join('');
-    }
-
-    function postAffirmation() {
-        const affirmationInput = document.getElementById('affirmationInput').value;
-        const affirmationsList = JSON.parse(sessionStorage.getItem('affirmations')) || [];
-        affirmationsList.push(affirmationInput);
-        sessionStorage.setItem('affirmations', JSON.stringify(affirmationsList));
-        loadAffirmations();
-        document.getElementById('affirmationInput').value = '';
-    }
-
-    function loadAffirmations() {
-        const affirmationsList = JSON.parse(sessionStorage.getItem('affirmations')) || [];
-        const affirmationsContainer = document.getElementById('affirmationsList');
-        affirmationsContainer.innerHTML = affirmationsList.map(affirmation => `<div class="message">${affirmation}</div>`).join('');
-        loadSlideshow();
-    }
-
-    function loadSlideshow() {
-        const affirmationsList = JSON.parse(sessionStorage.getItem('affirmations')) || [];
-        const slideshowContainer = document.getElementById('affirmationSlide');
-        slideshowContainer.innerHTML = '';
-
-        if (affirmationsList.length > 0) {
-            affirmationsList.forEach((affirmation, index) => {
-                slideshowContainer.innerHTML += `<div class="slides ${index === 0 ? 'active' : ''}">${affirmation}</div>`;
-            });
-            startSlideshow();
-        }
-    }
-
-    function startSlideshow() {
-        let slideIndex = 0;
-        const slides = document.querySelectorAll('.slides');
-
-        function showSlides() {
-            slides.forEach(slide => slide.style.display = 'none');
-            slideIndex = (slideIndex + 1) % slides.length;
-            slides[slideIndex].style.display = 'block';
-        }
-
-        slides[slideIndex].style.display = 'block'; // Show the first slide
-        setInterval(showSlides, 3000); // Change slide every 3 seconds
+        document.getElementById('chatPrompt').innerText = `Let's talk, ${username}!`;
     }
 
     function sendMessage() {
         const messageInput = document.getElementById('messageInput').value;
+        const username = sessionStorage.getItem('username') || 'User';
+        const dateTime = new Date().toLocaleString();
         const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
-        messages.push(messageInput);
+        messages.push(`${dateTime} - ${username}: ${messageInput}`);
         sessionStorage.setItem('messages', JSON.stringify(messages));
         loadMessages();
         document.getElementById('messageInput').value = '';
@@ -267,43 +159,9 @@
         messagesContainer.innerHTML = messages.map(message => `<div class="message">${message}</div>`).join('');
     }
 
-    function sendPrivateMessage() {
-        const privateMessageInput = document.getElementById('privateMessageInput').value;
-        const privateMessages = JSON.parse(sessionStorage.getItem('privateMessages')) || [];
-        privateMessages.push(privateMessageInput);
-        sessionStorage.setItem('privateMessages', JSON.stringify(privateMessages));
-        loadPrivateMessages();
-        document.getElementById('privateMessageInput').value = '';
-    }
-
-    function loadPrivateMessages() {
-        const privateMessages = JSON.parse(sessionStorage.getItem('privateMessages')) || [];
-        const privateMessagesContainer = document.getElementById('privateMessages');
-        privateMessagesContainer.innerHTML = privateMessages.map(message => `<div class="message">${message}</div>`).join('');
-    }
-
-    function postVideo() {
-        const videoInput = document.getElementById('videoInput').value;
-        const videoList = JSON.parse(sessionStorage.getItem('videoList')) || [];
-        videoList.push(videoInput);
-        sessionStorage.setItem('videoList', JSON.stringify(videoList));
-        loadVideos();
-        document.getElementById('videoInput').value = '';
-    }
-
-    function loadVideos() {
-        const videoList = JSON.parse(sessionStorage.getItem('videoList')) || [];
-        const videoContainer = document.getElementById('videoList');
-        videoContainer.innerHTML = videoList.map(video => `<div class="video"><iframe width="100%" height="315" src="${video}" frameborder="0" allowfullscreen></iframe></div>`).join('');
-    }
-
     // Load initial data
     displayWelcomeMessage();
-    loadDiaryEntries();
-    loadAffirmations();
     loadMessages();
-    loadPrivateMessages();
-    loadVideos();
 </script>
 
 </body>
