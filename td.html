@@ -99,30 +99,9 @@
     </nav>
 </header>
 
-<section id="dashboard" class="page" style="display:none;">
-    <h2 id="welcomeMessage"></h2>
-    <p>Let's talk!</p>
-    <div class="gif-container">
-        <img src="https://media.giphy.com/media/xT39D3z2d9U2J3z8Wq/giphy.gif" alt="Welcome GIF" width="300">
-    </div>
 
-    <h3>Chat</h3>
-    <div class="chat-container">
-        <div id="messages">
-            <iframe src="https://giphy.com/embed/rkldeP85vXJG8FLxKB" width="150" height="150" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pietvijverberg-orchidee-phalaenopsis-piet-vijverberg-rkldeP85vXJG8FLxKB">via GIPHY</a></p>
-        </div>
-        <div>
-            <textarea class="message-input" id="messageInput" placeholder="Type your message..."></textarea>
-            <button class="send-button" onclick="sendMessage()">Send Message</button>
-        </div>
-    </div>
 
-    <h3>Affirmations Slideshow</h3>
-    <div class="slideshow-container">
-        <div class="slides" id="affirmationSlide"></div>
-    </div>
-</section>
-
+    
 <section id="diary" class="page">
     <h2>My Diary</h2>
     <textarea class="entry-input" id="diaryInput" rows="5" placeholder="Write your secret..."></textarea>
@@ -130,36 +109,7 @@
     <div class="diary-container" id="diaryEntries"></div>
 </section>
 
-<section id="affirmations" class="page" style="display:none;">
-    <h2>Affirmations</h2>
-    <textarea class="affirmation-input" id="affirmationInput" placeholder="Write your affirmation..."></textarea>
-    <button onclick="postAffirmation()">Post Affirmation</button>
-    <div id="affirmationsList"></div>
-</section>
 
-<section id="one-on-one" class="page" style="display:none;">
-    <h2>One on One</h2>
-    <p>This section allows for private conversations.</p>
-    <div class="chat-container">
-        <div id="privateMessages"></div>
-        <div>
-            <textarea class="message-input" id="privateMessageInput" placeholder="Type your private message..."></textarea>
-            <button class="send-button" onclick="sendPrivateMessage()">Send Private Message</button>
-        </div>
-    </div>
-</section>
-
-<section id="books" class="page" style="display:none;">
-    <h2>Books</h2>
-    <p>List of recommended books will go here.</p>
-</section>
-
-<section id="videos" class="page" style="display:none;">
-    <h2>Videos</h2>
-    <input class="video-input" id="videoInput" type="url" placeholder="Enter video URL" />
-    <button onclick="postVideo()">Post Video</button>
-    <div id="videoList"></div>
-</section>
 
 <script>
     sessionStorage.setItem('username', 'User'); // Replace 'User' with the actual username
