@@ -4,165 +4,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Purple App</title>
+    <title>My Purple App - Add Content</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f3f0ff;
-            color: #4b2e83;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #6a5acd;
-            padding: 1rem;
-            text-align: center;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            transition: background 0.3s, transform 0.3s;
-            background: rgba(255, 255, 255, 0.2);
-        }
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
-        }
-        section {
-            padding: 2rem;
-            max-width: 800px;
-            margin: auto;
-        }
-        .gif-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
-        .chat-container {
-            border: 1px solid #6a5acd;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            background-color: #ffffff;
-        }
-        #messages {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            background-color: #f9f9f9;
-        }
-        .message {
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            border-radius: 5px;
-            background-color: #e7e7ff;
-        }
-        .message-input {
-            width: calc(100% - 100px);
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .send-button {
-            padding: 0.5rem 1rem;
-            background-color: #6a5acd;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .send-button:hover {
-            background-color: #5a4cad;
-        }
-        .slideshow-container {
-            position: relative;
-            margin-top: 2rem;
-            border: 1px solid #6a5acd;
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #ffffff;
-        }
-        .slides {
-            display: none;
-            padding: 1rem;
-            text-align: center;
-        }
-        .active {
-            display: block;
-        }
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f0ff;
+    color: #4b2e83;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #6a5acd;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: background 0.3s, transform 0.3s;
+    background: rgba(255, 255, 255, 0.2);
+}
+nav a:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+section {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+.input-container {
+    margin-bottom: 2rem;
+}
+.input-field {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.submit-button {
+    padding: 10px 20px;
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.submit-button:hover {
+    background-color: #5a4cb1;
+}
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.video-card {
+    border: 1px solid #6a5acd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #ffffff;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.video-card:hover {
+    transform: scale(1.05);
+}
+.video-title {
+    cursor: pointer;
+    color: #6a5acd;
+    text-decoration: underline;
+}
     </style>
-</head>
 <body>
 
 <header>
     <h1>My Purple App</h1>
     <nav>
-         <a href="index.html" onclick="showPage('dashboard')">Dashboard</a>
-        <a href="td.html" onclick="showPage('diary')">My Diary</a>
-        <a href="event.html" onclick="showPage('affirmations')">events</a>
-        <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
-        <a href="bk.html" onclick="showPage('books')">Books</a>
-        <a href="videos.html" onclick="showPage('videos')">Videos</a>
+        <a href="index.html">Dashboard</a>
+        <a href="diary.html">My Diary</a>
+        <a href="event.html">Events</a>
+        <a href="one.html">One on One</a>
+        <a href="books.html">Books</a>
+        <a href="videos.html">Videos</a>
     </nav>
 </header>
 
-<section id="dashboard" class="page">
-    <h2 id="welcomeMessage"></h2>
-    <p id="chatPrompt">Let's talk!</p>
-    
-    <h3>Chat</h3>
-    <div class="chat-container">
-        <iframe src="https://giphy.com/embed/d0ClxexIeTBQL2XXDM" width="150" height="150" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pietvijverberg-orchidee-phalaenopsis-piet-vijverberg-d0ClxexIeTBQL2XXDM">via GIPHY</a></p>
-        <div id="messages"></div>
-        <div>
-            <textarea class="message-input" id="messageInput" placeholder="Type your message..."></textarea>
-            <button class="send-button" onclick="sendMessage()">Send Message</button>
-        </div>
+<section id="input" class="page">
+    <h2>Add Book</h2>
+    <div class="input-container">
+        <input class="input-field" id="bookTitle" type="text" placeholder="Book Title" />
+        <input class="input-field" id="bookPrice" type="text" placeholder="Book Price" />
+        <input class="input-field" id="bookAbout" type="text" placeholder="About the Book" />
+        <input class="input-field" id="bookCover" type="file" accept="image/*" />
+        <button class="submit-button" onclick="addBook()">Add Book</button>
+    </div>
+
+    <h2>Add Video</h2>
+    <div class="input-container">
+        <input class="input-field" id="videoTitle" type="text" placeholder="Video Title" />
+        <input class="input-field" id="videoFile" type="file" accept="video/*" />
+        <button class="submit-button" onclick="addVideo()">Add Video</button>
     </div>
 </section>
 
 <script>
-    function displayWelcomeMessage() {
-        const username = sessionStorage.getItem('username') || 'User';
-        document.getElementById('welcomeMessage').innerText = `Hey ${username}, welcome!`;
-        document.getElementById('chatPrompt').innerText = `Let's talk, ${username}!`;
+    function addBook() {
+        const title = document.getElementById('bookTitle').value;
+        const price = document.getElementById('bookPrice').value;
+        const about = document.getElementById('bookAbout').value;
+        const coverInput = document.getElementById('bookCover');
+        const cover = coverInput.files[0];
+
+        if (title && price && about && cover) {
+            const books = JSON.parse(sessionStorage.getItem('books')) || [];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                books.push({ title, price, about, cover: reader.result });
+                sessionStorage.setItem('books', JSON.stringify(books));
+                alert("Book added successfully!");
+                document.getElementById('bookTitle').value = '';
+                document.getElementById('bookPrice').value = '';
+                document.getElementById('bookAbout').value = '';
+                coverInput.value = '';
+            };
+            reader.readAsDataURL(cover);
+        } else {
+            alert("Please fill in all fields.");
+        }
     }
 
-    function sendMessage() {
-        const messageInput = document.getElementById('messageInput').value;
-        const username = sessionStorage.getItem('username') || 'User';
-        const dateTime = new Date().toLocaleString();
-        const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
-        messages.push(`${dateTime} - ${username}: ${messageInput}`);
-        sessionStorage.setItem('messages', JSON.stringify(messages));
-        loadMessages();
-        document.getElementById('messageInput').value = '';
-    }
+    function addVideo() {
+        const title = document.getElementById('videoTitle').value;
+        const videoInput = document.getElementById('videoFile');
+        const video = videoInput.files[0];
 
-    function loadMessages() {
-        const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
-        const messagesContainer = document.getElementById('messages');
-        messagesContainer.innerHTML = messages.map(message => `<div class="message">${message}</div>`).join('');
+        if (title && video) {
+            const videos = JSON.parse(sessionStorage.getItem('videos')) || [];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                videos.push({ title, video: reader.result });
+                sessionStorage.setItem('videos', JSON.stringify(videos));
+                alert("Video added successfully!");
+                document.getElementById('videoTitle').value = '';
+                videoInput.value = '';
+            };
+            reader.readAsDataURL(video);
+        } else {
+            alert("Please fill in all fields.");
+        }
     }
-
-    // Load initial data
-    displayWelcomeMessage();
-    loadMessages();
 </script>
 
 </body>
