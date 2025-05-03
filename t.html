@@ -3,129 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Purple App - Input Page</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f3f0ff;
-            color: #4b2e83;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #6a5acd;
-            padding: 1rem;
-            text-align: center;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            transition: background 0.3s, transform 0.3s;
-            background: rgba(255, 255, 255, 0.2);
-        }
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
-        }
-        section {
-            padding: 2rem;
-            max-width: 800px;
-            margin: auto;
-        }
-        .input-container {
-            margin-bottom: 2rem;
-        }
-        .input-field {
-            width: calc(100% - 100px);
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin: 0.5rem 0;
-        }
-        .submit-button {
-            padding: 0.5rem 1rem;
-            background-color: #6a5acd;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .submit-button:hover {
-            background-color: #5a4cad;
-        }
-    </style>
+    <title>My Purple App - Add Books</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+    <style>
+       body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f0ff;
+    color: #4b2e83;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #6a5acd;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: background 0.3s, transform 0.3s;
+    background: rgba(255, 255, 255, 0.2);
+}
+nav a:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+section {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+.input-container {
+    margin-bottom: 2rem;
+}
+.input-field {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.submit-button {
+    padding: 10px 20px;
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.submit-button:hover {
+    background-color: #5a4cb1;
+}
+.book-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.book-card {
+    border: 1px solid #6a5acd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #ffffff;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.book-card:hover {
+    transform: scale(1.05);
+}
+.book-title {
+    cursor: pointer;
+    color: #6a5acd;
+    text-decoration: underline;
+}
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+}
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #6a5acd;
+} 
+    </style>
 <body>
 
 <header>
     <h1>My Purple App</h1>
     <nav>
-        <a href="index.html" onclick="showPage('dashboard')">Dashboard</a>
-        <a href="#td.html" onclick="showPage('diary')">My Diary</a>
-        <a href="event.html" onclick="showPage('affirmations')">events</a>
-        <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
-        <a href="bk.html" onclick="showPage('books')">Books</a>
-        <a href="videos.html" onclick="showPage('videos')">Videos</a>
+        <a href="index.html">Dashboard</a>
+        <a href="diary.html">My Diary</a>
+        <a href="event.html">Events</a>
+        <a href="one.html">One on One</a>
+        <a href="books.html">Books</a>
+        <a href="videos.html">Videos</a>
     </nav>
 </header>
 
 <section id="input" class="page">
-    <h2>Add Video</h2>
-    <div class="input-container">
-        <input class="input-field" id="videoTitle" type="text" placeholder="Video Title" />
-        <input class="input-field" id="videoUrl" type="url" placeholder="YouTube Video URL" />
-        <button class="submit-button" onclick="addVideo()">Add Video</button>
-    </div>
-
     <h2>Add Book</h2>
     <div class="input-container">
         <input class="input-field" id="bookTitle" type="text" placeholder="Book Title" />
         <input class="input-field" id="bookPrice" type="text" placeholder="Book Price" />
         <input class="input-field" id="bookAbout" type="text" placeholder="About the Book" />
+        <input class="input-field" id="bookCover" type="file" accept="image/*" />
         <button class="submit-button" onclick="addBook()">Add Book</button>
     </div>
 </section>
 
 <script>
-    function showPage(page) {
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(p => p.style.display = 'none');
-        document.getElementById(page).style.display = 'block';
-    }
-
-    function addVideo() {
-        const title = document.getElementById('videoTitle').value;
-        const url = document.getElementById('videoUrl').value;
-        const videos = JSON.parse(sessionStorage.getItem('videos')) || [];
-        videos.push({ title, url });
-        sessionStorage.setItem('videos', JSON.stringify(videos));
-        document.getElementById('videoTitle').value = '';
-        document.getElementById('videoUrl').value = '';
-    }
-
     function addBook() {
         const title = document.getElementById('bookTitle').value;
         const price = document.getElementById('bookPrice').value;
         const about = document.getElementById('bookAbout').value;
-        const books = JSON.parse(sessionStorage.getItem('books')) || [];
-        books.push({ title, price, about });
-        sessionStorage.setItem('books', JSON.stringify(books));
-        document.getElementById('bookTitle').value = '';
-        document.getElementById('bookPrice').value = '';
-        document.getElementById('bookAbout').value = '';
+        const coverInput = document.getElementById('bookCover');
+        const cover = coverInput.files[0];
+
+        if (title && price && about && cover) {
+            const books = JSON.parse(sessionStorage.getItem('books')) || [];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                books.push({ title, price, about, cover: reader.result });
+                sessionStorage.setItem('books', JSON.stringify(books));
+                alert("Book added successfully!");
+                document.getElementById('bookTitle').value = '';
+                document.getElementById('bookPrice').value = '';
+                document.getElementById('bookAbout').value = '';
+                coverInput.value = '';
+            };
+            reader.readAsDataURL(cover);
+        } else {
+            alert("Please fill in all fields.");
+        }
     }
 </script>
 
