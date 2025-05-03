@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Purple App - One on One</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f0ff;
+            color: #4b2e83;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #6a5acd;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s, transform 0.3s;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+        section {
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+        }
+        .chat-container {
+            border: 1px solid #6a5acd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: #ffffff;
+        }
+        #messages {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 5px;
+            background-color: #e7e7ff;
+        }
+        .message-input {
+            width: calc(100% - 100px);
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .send-button {
+            padding: 0.5rem 1rem;
+            background-color: #6a5acd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .send-button:hover {
+            background-color: #5a4cad;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>My Purple App</h1>
+    <nav>
+        <a href="#dashboard" onclick="showPage('dashboard')">Dashboard</a>
+        <a href="#diary" onclick="showPage('diary')">My Diary</a>
+        <a href="#affirmations" onclick="showPage('affirmations')">Affirmations</a>
+        <a href="#one-on-one" onclick="showPage('one-on-one')">One on One</a>
+        <a href="#books" onclick="showPage('books')">Books</a>
+        <a href="#videos" onclick="showPage('videos')">Videos</a>
+    </nav>
+</header>
+
+<section id="one-on-one" class="page">
+    <h2>One on One Chat</h2>
+    <audio id="backgroundAudio" src="your-audio-file-url.mp3" autoplay loop></audio>
+    <div class="chat-container">
+        <div id="messages"></div>
+        <div>
+            <textarea class="message-input" id="privateMessageInput" placeholder="Type your message..."></textarea>
+            <button class="send-button" onclick="sendPrivateMessage()">Send Message</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showPage(page) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(p => p.style.display = 'none');
+        document.getElementById(page).style.display = 'block';
+    }
+
+    function sendPrivateMessage() {
+        const privateMessageInput = document.getElementById('privateMessageInput').value;
+        const privateMessages = JSON.parse(sessionStorage.getItem('privateMessages')) || [];
+        privateMessages.push(privateMessageInput);
+        sessionStorage.setItem('privateMessages', JSON.stringify(privateMessages));
+        loadPrivateMessages();
+        document.getElementById('privateMessageInput').value = '';
+    }
+
+    function loadPrivateMessages() {
+        const privateMessages = JSON.parse(sessionStorage.getItem('privateMessages')) || [];
+        const privateMessagesContainer = document.getElementById('messages');
+        privateMessagesContainer.innerHTML = privateMessages.map(message => `<div class="message">${message}</div>`).join('');
+    }
+
+    // Load initial data
+    loadPrivateMessages();
+</script>
+
+</body>
+</html>

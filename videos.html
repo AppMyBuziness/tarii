@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Purple App - Videos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f0ff;
+            color: #4b2e83;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #6a5acd;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s, transform 0.3s;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+        section {
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+        }
+        .video-list {
+            margin-top: 1rem;
+        }
+        .video {
+            margin: 1rem 0;
+            border: 1px solid #6a5acd;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        iframe {
+            width: 100%;
+            height: 315px;
+        }
+        .video-title {
+            flex: 1;
+            margin-right: 1rem;
+        }
+        .like-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #ff6b6b;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>My Purple App</h1>
+    <nav>
+        <a href="#dashboard" onclick="showPage('dashboard')">Dashboard</a>
+        <a href="#diary" onclick="showPage('diary')">My Diary</a>
+        <a href="#affirmations" onclick="showPage('affirmations')">Affirmations</a>
+        <a href="#one-on-one" onclick="showPage('one-on-one')">One on One</a>
+        <a href="#books" onclick="showPage('books')">Books</a>
+        <a href="#videos" onclick="showPage('videos')">Videos</a>
+    </nav>
+</header>
+
+<section id="videos" class="page">
+    <h2>Videos</h2>
+    <div class="video-list" id="videoList"></div>
+</section>
+
+<script>
+    function loadVideos() {
+        const videos = JSON.parse(sessionStorage.getItem('videos')) || [];
+        const videoContainer = document.getElementById('videoList');
+        videoContainer.innerHTML = videos.map(video => `
+            <div class="video">
+                <iframe src="${video.url.replace('watch?v=', 'embed/')}" frameborder="0" allowfullscreen></iframe>
+                <div class="video-title">${video.title}</div>
+            </div>
+        `).join('');
+    }
+
+    // Load initial data
+    loadVideos();
+</script>
+</body>
+</html>
