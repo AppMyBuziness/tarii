@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Purple App - Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f0ff;
+            color: #4b2e83;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #6a5acd;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        section {
+            padding: 2rem;
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-button {
+            padding: 0.5rem 1rem;
+            background-color: #6a5acd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .login-button:hover {
+            background-color: #5a4cad;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>My Purple App</h1>
+</header>
+
+<section id="login">
+    <h2>Login</h2>
+    <input class="input-field" id="usernameInput" type="text" placeholder="Enter your username" />
+    <input class="input-field" id="passwordInput" type="password" placeholder="Enter your password" />
+    <button class="login-button" onclick="login()">Login</button>
+</section>
+
+<script>
+    // Predefined usernames and passwords
+    const users = {
+        'user1': 'password1',
+        'user2': 'password2',
+        'user3': 'password3'
+    };
+
+    function login() {
+        const username = document.getElementById('usernameInput').value;
+        const password = document.getElementById('passwordInput').value;
+
+        if (users[username] && users[username] === password) {
+            sessionStorage.setItem('username', username);
+            window.location.href = 'dash.html'; // Redirect to the dashboard
+        } else {
+            alert('Invalid username or password.');
+        }
+    }
+</script>
+
+</body>
+</html>
