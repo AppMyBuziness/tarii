@@ -44,45 +44,6 @@
             max-width: 800px;
             margin: auto;
         }
-        .gif-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
-        .diary-container {
-            border: 1px solid #6a5acd;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            background-color: #ffffff;
-        }
-        .entry {
-            margin: 1rem 0;
-            padding: 0.5rem;
-            border-radius: 5px;
-            background-color: #e7e7ff;
-        }
-        .entry-time {
-            font-size: 0.8rem;
-            color: #777;
-        }
-        .entry-input {
-            width: calc(100% - 100px);
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .save-button {
-            padding: 0.5rem 1rem;
-            background-color: #6a5acd;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .save-button:hover {
-            background-color: #5a4cad;
-        }
         .chat-container {
             margin-top: 2rem;
             border: 1px solid #6a5acd;
@@ -128,7 +89,7 @@
     <nav>
         <a href="dash.html" onclick="showPage('dashboard')">Dashboard</a>
         <a href="td.html" onclick="showPage('diary')">My Diary</a>
-        <a href="" onclick="showPage('affirmations')">events</a>
+        <a href="" onclick="showPage('affirmations')">Events</a>
         <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
         <a href="bk.html" onclick="showPage('books')">Books</a>
         <a href="videos.html" onclick="showPage('videos')">Videos</a>
@@ -219,7 +180,7 @@
         }
 
         slides[slideIndex].style.display = 'block'; // Show the first slide
-        setInterval(showSlides, 30); // Change slide every 3 seconds
+        setInterval(showSlides, 3000); // Change slide every 3 seconds
     }
 
     function sendMessage() {
