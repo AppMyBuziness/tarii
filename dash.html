@@ -112,6 +112,11 @@
             <button class="send-button" onclick="sendMessage()">Send Message</button>
         </div>
     </div>
+
+    <h3>Affirmations Slideshow</h3>
+<div class="slideshow-container">
+    <div class="slides" id="affirmationSlide"></div>
+</div>
 </section>
 
 <script>
@@ -120,7 +125,49 @@
         document.getElementById('welcomeMessage').innerText = `Hey ${username}, welcome!`;
         document.getElementById('chatPrompt').innerText = `Let's talk, ${username}!`;
     }
+function loadSlideshow() {
 
+const affirmationsList = JSON.parse(sessionStorage.getItem('affirmations')) || [];
+
+const slideshowContainer = document.getElementById('affirmationSlide');
+
+slideshowContainer.innerHTML = '';
+
+if (affirmationsList.length > 0) {
+
+affirmationsList.forEach((affirmation, index) => {
+
+slideshowContainer.innerHTML += `<div class="slides ${index === 0 ? 'active' : ''}">${affirmation}</div>`;
+
+});
+
+startSlideshow();
+
+}
+
+}
+
+function startSlideshow() {
+
+let slideIndex = 0;
+
+const slides = document.querySelectorAll('.slides');
+
+function showSlides() {
+
+slides.forEach(slide => slide.style.display = 'none');
+
+slideIndex = (slideIndex + 1) % slides.length;
+
+slides[slideIndex].style.display = 'block';
+
+}
+
+slides[slideIndex].style.display = 'block'; // Show the first slide
+
+setInterval(showSlides, 3000); // Change slide every 3 seconds
+
+}
     function sendMessage() {
         const messageInput = document.getElementById('messageInput').value;
         const username = sessionStorage.getItem('username') || 'User';
