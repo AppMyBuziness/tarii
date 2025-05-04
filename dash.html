@@ -102,6 +102,7 @@
     
     <h3>Chat</h3>
     <div class="chat-container">
+        <iframe src="https://giphy.com/embed/cRKRi9CeahmpH3Ru9X" width="122" height="200" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/stickers/bredenkids-singing-spring-tweeting-cRKRi9CeahmpH3Ru9X">via GIPHY</a></p>
         <div id="messages"></div>
         <div>
             <textarea class="message-input" id="messageInput" placeholder="Type your message..."></textarea>
@@ -161,22 +162,21 @@
         const slideshowContainer = document.getElementById('affirmationSlide');
         slideshowContainer.innerHTML = '';
 
-        if (affirmationsList.length > 0) {
-            affirmationsList.forEach((affirmation, index) => {
-                slideshowContainer.innerHTML += `<div class="slides ${index === 0 ? 'active' : ''}">${affirmation}</div>`;
-            });
-            startSlideshow();
-        }
+        affirmationsList.forEach((affirmation, index) => {
+            slideshowContainer.innerHTML += `<div class="slides">${affirmation}</div>`;
+        });
+        
+        startSlideshow();
     }
 
     function startSlideshow() {
         let slideIndex = 0;
         const slides = document.querySelectorAll('.slides');
-
+        
         function showSlides() {
-            slides.forEach(slide => slide.style.display = 'none');
-            slideIndex = (slideIndex + 1) % slides.length;
-            slides[slideIndex].style.display = 'block';
+            slides.forEach(slide => slide.style.display = 'none'); // Hide all slides
+            slideIndex = (slideIndex + 1) % slides.length; // Increment the index
+            slides[slideIndex].style.display = 'block'; // Show the current slide
         }
 
         slides[slideIndex].style.display = 'block'; // Show the first slide
