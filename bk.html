@@ -5,91 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Purple App - Books</title>
     <link rel="stylesheet" href="styles.css">
-</head>
     <style>
         body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f3f0ff;
-    color: #4b2e83;
-    margin: 0;
-    padding: 0;
-}
-header {
-    background-color: #6a5acd;
-    padding: 1rem;
-    text-align: center;
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-nav a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    transition: background 0.3s, transform 0.3s;
-    background: rgba(255, 255, 255, 0.2);
-}
-nav a:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: scale(1.05);
-}
-section {
-    padding: 2rem;
-    max-width: 800px;
-    margin: auto;
-}
-.input-container {
-    margin-bottom: 2rem;
-}
-.input-field {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-.submit-button {
-    padding: 10px 20px;
-    background-color: #6a5acd;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.submit-button:hover {
-    background-color: #5a4cb1;
-}
-.book-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-}
-.book-card {
-    border: 1px solid #6a5acd;
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: #ffffff;
-    text-align: center;
-    transition: transform 0.2s;
-}
-.book-card:hover {
-    transform: scale(1.05);
-}
-.book-title {
-    cursor: pointer;
-    color: #6a5acd;
-    text-decoration: underline;
-}
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f0ff;
+            color: #4b2e83;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #6a5acd;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s, transform 0.3s;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+        section {
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+        }
+        .book-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .book-card {
+            border: 1px solid #6a5acd;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #ffffff;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .book-card:hover {
+            transform: scale(1.05);
+        }
+        .book-title {
+            cursor: pointer;
+            color: #6a5acd;
+            text-decoration: underline;
+        }
+        .book-image {
+            width: 100%;
+            height: auto;
+            max-width: 150px; /* Adjust as needed */
+            max-height: 200px; /* Adjust as needed */
+        }
     </style>
+</head>
 <body>
 
 <header>
@@ -107,13 +92,21 @@ section {
 <section id="books" class="page">
     <h2>Books</h2>
     <div class="book-container" id="bookList">
-        <h2>life</h2>
-        <img src="" style="width:5cm; height:5cm;" >
-        <a href="">Go Buy</a>
+        <div class="book-card">
+            <h3 class="book-title">Life</h3>
+            <img src="path/to/your/book-cover.jpg" alt="Book Cover" class="book-image">
+            <p>About the book: This book explores the essence of life.</p>
+            <a href="https://example.com" target="_blank">Go Buy</a>
+        </div>
+        <div class="book-card">
+            <h3 class="book-title">Another Book</h3>
+            <img src="path/to/another/book-cover.jpg" alt="Another Book Cover" class="book-image">
+            <p>About the book: A thrilling journey of discovery.</p>
+            <a href="https://example.com" target="_blank">Go Buy</a>
+        </div>
+        <!-- Add more book cards as needed -->
     </div>
 </section>
-
-
 
 </body>
 </html>
