@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,6 +83,42 @@
         .save-button:hover {
             background-color: #5a4cad;
         }
+        .chat-container {
+            margin-top: 2rem;
+            border: 1px solid #6a5acd;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+        .message-input {
+            width: calc(100% - 100px);
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        .send-button {
+            padding: 0.5rem 1rem;
+            background-color: #6a5acd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+        .send-button:hover {
+            background-color: #5a4cad;
+        }
+        .slides {
+            display: none;
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        .active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -114,9 +149,9 @@
     </div>
 
     <h3>Affirmations Slideshow</h3>
-<div class="slideshow-container">
-    <div class="slides" id="affirmationSlide"></div>
-</div>
+    <div class="slideshow-container">
+        <div class="slides" id="affirmationSlide"></div>
+    </div>
 </section>
 
 <script>
@@ -125,49 +160,68 @@
         document.getElementById('welcomeMessage').innerText = `Hey ${username}, welcome!`;
         document.getElementById('chatPrompt').innerText = `Let's talk, ${username}!`;
     }
-function loadSlideshow() {
 
-const affirmationsList = JSON.parse(sessionStorage.getItem('affirmations')) || [];
+    function loadSlideshow() {
+        const affirmationsList = [
+            "I am capable of achieving my goals.",
+            "I embrace change and welcome new experiences.",
+            "I am worthy of love and respect.",
+            "I choose to focus on the positive.",
+            "I believe in my abilities.",
+            "I am resilient and can overcome any challenges.",
+            "I attract success and abundance.",
+            "I am in control of my thoughts and emotions.",
+            "I radiate confidence and positivity.",
+            "I am deserving of happiness and joy.",
+            "I trust the process of life.",
+            "I learn and grow from every experience.",
+            "I am a magnet for good things.",
+            "I am grateful for the abundance in my life.",
+            "I am surrounded by love and support.",
+            "I am making a difference in the world.",
+            "I attract opportunities that align with my goals.",
+            "I am strong and capable.",
+            "I am constantly improving and evolving.",
+            "I choose to be happy and fulfilled.",
+            "I am creative and open-minded.",
+            "I am at peace with my past.",
+            "I am building a life I love.",
+            "I am worthy of success and achievement.",
+            "I am open to receiving all good things.",
+            "I am confident in my decisions.",
+            "I choose to let go of negativity.",
+            "I am a source of inspiration for others.",
+            "I believe in my dreams and pursue them.",
+            "I am surrounded by endless possibilities.",
+            "I am grateful for this moment.",
+            "I am worthy of a beautiful life."
+        ];
 
-const slideshowContainer = document.getElementById('affirmationSlide');
+        const slideshowContainer = document.getElementById('affirmationSlide');
+        slideshowContainer.innerHTML = '';
 
-slideshowContainer.innerHTML = '';
+        if (affirmationsList.length > 0) {
+            affirmationsList.forEach((affirmation, index) => {
+                slideshowContainer.innerHTML += `<div class="slides ${index === 0 ? 'active' : ''}">${affirmation}</div>`;
+            });
+            startSlideshow();
+        }
+    }
 
-if (affirmationsList.length > 0) {
+    function startSlideshow() {
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slides');
 
-affirmationsList.forEach((affirmation, index) => {
+        function showSlides() {
+            slides.forEach(slide => slide.style.display = 'none');
+            slideIndex = (slideIndex + 1) % slides.length;
+            slides[slideIndex].style.display = 'block';
+        }
 
-slideshowContainer.innerHTML += `<div class="slides ${index === 0 ? 'active' : ''}">${affirmation}</div>`;
+        slides[slideIndex].style.display = 'block'; // Show the first slide
+        setInterval(showSlides, 3000); // Change slide every 3 seconds
+    }
 
-});
-
-startSlideshow();
-
-}
-
-}
-
-function startSlideshow() {
-
-let slideIndex = 0;
-
-const slides = document.querySelectorAll('.slides');
-
-function showSlides() {
-
-slides.forEach(slide => slide.style.display = 'none');
-
-slideIndex = (slideIndex + 1) % slides.length;
-
-slides[slideIndex].style.display = 'block';
-
-}
-
-slides[slideIndex].style.display = 'block'; // Show the first slide
-
-setInterval(showSlides, 3000); // Change slide every 3 seconds
-
-}
     function sendMessage() {
         const messageInput = document.getElementById('messageInput').value;
         const username = sessionStorage.getItem('username') || 'User';
@@ -188,6 +242,7 @@ setInterval(showSlides, 3000); // Change slide every 3 seconds
     // Load initial data
     displayWelcomeMessage();
     loadMessages();
+    loadSlideshow();
 </script>
 
 </body>
