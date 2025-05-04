@@ -106,26 +106,14 @@ section {
 
 <section id="books" class="page">
     <h2>Books</h2>
-    <div class="book-container" id="bookList"></div>
+    <div class="book-container" id="bookList">
+        <h2>life</h2>
+        <img src="" style="width:7cm; height:7cm;" >
+        <a href="">Go Buy</a>
+    </div>
 </section>
 
-<script>
-    function loadBooks() {
-        const books = JSON.parse(sessionStorage.getItem('books')) || [];
-        const bookContainer = document.getElementById('bookList');
-        bookContainer.innerHTML = books.map(book => `
-            <div class="book-card">
-                <img src="${book.cover}" alt="Book Cover" style="width: 100%; max-width: 150px; border-radius: 4px;" />
-                <h4 class="book-title">${book.title}</h4>
-                <p>Price: ${book.price}</p>
-                <p>${book.about}</p>
-            </div>
-        `).join('');
-    }
 
-    // Load initial data
-    loadBooks();
-</script>
 
 </body>
 </html>
