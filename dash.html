@@ -116,7 +116,6 @@
         <div class="slides" id="affirmationSlide"></div>
     </div>
 </section>
-
 <script>
     function displayWelcomeMessage() {
         const username = sessionStorage.getItem('username') || 'User';
@@ -128,7 +127,35 @@
         const affirmationsList = [
             "I am capable of achieving my goals.",
             "I embrace change and welcome new experiences.",
-            // Add other affirmations as needed...
+            "I am worthy of love and respect.",
+            "I choose to focus on the positive.",
+            "I believe in my abilities.",
+            "I am resilient and can overcome any challenges.",
+            "I attract success and abundance.",
+            "I am in control of my thoughts and emotions.",
+            "I radiate confidence and positivity.",
+            "I am deserving of happiness and joy.",
+            "I trust the process of life.",
+            "I learn and grow from every experience.",
+            "I am a magnet for good things.",
+            "I am grateful for the abundance in my life.",
+            "I am surrounded by love and support.",
+            "I am making a difference in the world.",
+            "I attract opportunities that align with my goals.",
+            "I am strong and capable.",
+            "I am constantly improving and evolving.",
+            "I choose to be happy and fulfilled.",
+            "I am creative and open-minded.",
+            "I am at peace with my past.",
+            "I am building a life I love.",
+            "I am worthy of success and achievement.",
+            "I am open to receiving all good things.",
+            "I am confident in my decisions.",
+            "I choose to let go of negativity.",
+            "I am a source of inspiration for others.",
+            "I believe in my dreams and pursue them.",
+            "I am surrounded by endless possibilities.",
+            "I am grateful for this moment.",
             "I am worthy of a beautiful life."
         ];
 
@@ -178,14 +205,20 @@
             document.getElementById('messageInput').value = '';
             loadMessages();
         } else {
-            console.error('Error sending message:', response.statusText);
+            const errorText = await response.text();
+            console.error('Error sending message:', response.statusText, errorText);
         }
     }
 
-    function loadMessages() {
-        const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
-        const messagesContainer = document.getElementById('messages');
-        messagesContainer.innerHTML = messages.map(message => `<div class="message">${message}</div>`).join('');
+    async function loadMessages() {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbx9S5NeaPeWsch05ifSuldpFntxl6vXQgKNnRrv3mGPUZMQ4jRY-t40FYSSDKBBDUsH/exec');
+        if (response.ok) {
+            const messages = await response.json();
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.innerHTML = messages.map(row => `<div class="message">${row[0]} - ${row[1]}: ${row[2]}</div>`).join('');
+        } else {
+            console.error('Error loading messages:', response.statusText);
+        }
     }
 
     // Load initial data
@@ -193,6 +226,5 @@
     loadMessages();
     loadSlideshow();
 </script>
-
 </body>
 </html>
