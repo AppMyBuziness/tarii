@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talk with Tari</title>
+    <title>My Purple App</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -46,17 +46,12 @@
         }
         .chat-container {
             margin-top: 2rem;
-            border: 1px solid #6a5acd;
-            border-radius: 8px;
-            padding: 1rem;
-            background-color: #ffffff;
         }
         .message-input {
             width: calc(100% - 100px);
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 5px;
-            margin-top: 1rem;
         }
         .send-button {
             padding: 0.5rem 1rem;
@@ -66,33 +61,31 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
-            margin-left: 10px;
         }
         .send-button:hover {
             background-color: #5a4cad;
         }
-        .slides {
-            display: none;
-            text-align: center;
-            font-size: 1.5rem;
-            margin: 20px 0;
-        }
-        .active {
-            display: block;
+        #messageDisplay {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #6a5acd;
+            border-radius: 5px;
+            padding: 1rem;
+            background-color: #ffffff;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Talk with Tari</h1>
+    <h1>My Purple App</h1>
     <nav>
-        <a href="dash.html" onclick="showPage('dashboard')">Dashboard</a>
-        <a href="td.html" onclick="showPage('diary')">My Diary</a>
-        <a href="" onclick="showPage('affirmations')">Events</a>
-        <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
-        <a href="bk.html" onclick="showPage('books')">Books</a>
-        <a href="videos.html" onclick="showPage('videos')">Videos</a>
+        <a href="#dashboard" onclick="showPage('dashboard')">Dashboard</a>
+        <a href="#diary" onclick="showPage('diary')">My Diary</a>
+        <a href="#affirmations" onclick="showPage('affirmations')">Affirmations</a>
+        <a href="#one-on-one" onclick="showPage('one-on-one')">One on One</a>
+        <a href="#books" onclick="showPage('books')">Books</a>
+        <a href="#videos" onclick="showPage('videos')">Videos</a>
     </nav>
 </header>
 
@@ -101,138 +94,74 @@
     <p id="chatPrompt">Let's talk!</p>
     
     <h3>Chat</h3>
-     <div class="chat-container">
-            <div class="chat-header">Class Chat</div>
-            <div class="message-display" id="messageDisplay">
-                <!-- Messages will be displayed here -->
-            </div>
-            <div class="message-input">
-                <input type="text" id="messageInput" placeholder="Type your message...">
-                <button onclick="sendMessage()">Send</button>
-            </div>
+    <div class="chat-container">
+        <div id="messageDisplay"></div>
+        <div>
+            <textarea class="message-input" id="messageInput" placeholder="Type your message..."></textarea>
+            <button class="send-button" onclick="sendMessage()">Send Message</button>
         </div>
     </div>
-
-
-    <h3>Affirmations Slideshow</h3>
-    <div class="slideshow-container">
-        <div class="slides" id="affirmationSlide"></div>
-    </div>
 </section>
+
 <script>
-    function displayWelcomeMessage() {
-        const username = sessionStorage.getItem('username') || 'User';
-        document.getElementById('welcomeMessage').innerText = `Hey ${username}, welcome!`;
-        document.getElementById('chatPrompt').innerText = `Let's talk, ${username}!`;
-    }
-
-    function loadSlideshow() {
-        const affirmationsList = [
-            "I am capable of achieving my goals.",
-            "I embrace change and welcome new experiences.",
-            "I am worthy of love and respect.",
-            "I choose to focus on the positive.",
-            "I believe in my abilities.",
-            "I am resilient and can overcome any challenges.",
-            "I attract success and abundance.",
-            "I am in control of my thoughts and emotions.",
-            "I radiate confidence and positivity.",
-            "I am deserving of happiness and joy.",
-            "I trust the process of life.",
-            "I learn and grow from every experience.",
-            "I am a magnet for good things.",
-            "I am grateful for the abundance in my life.",
-            "I am surrounded by love and support.",
-            "I am making a difference in the world.",
-            "I attract opportunities that align with my goals.",
-            "I am strong and capable.",
-            "I am constantly improving and evolving.",
-            "I choose to be happy and fulfilled.",
-            "I am creative and open-minded.",
-            "I am at peace with my past.",
-            "I am building a life I love.",
-            "I am worthy of success and achievement.",
-            "I am open to receiving all good things.",
-            "I am confident in my decisions.",
-            "I choose to let go of negativity.",
-            "I am a source of inspiration for others.",
-            "I believe in my dreams and pursue them.",
-            "I am surrounded by endless possibilities.",
-            "I am grateful for this moment.",
-            "I am worthy of a beautiful life."
-        ];
-
-        const slideshowContainer = document.getElementById('affirmationSlide');
-        slideshowContainer.innerHTML = '';
-
-        affirmationsList.forEach((affirmation) => {
-            slideshowContainer.innerHTML += `<div class="slides">${affirmation}</div>`;
-        });
-        
-        startSlideshow();
-    }
-
-    function startSlideshow() {
-        let slideIndex = 0;
-        const slides = document.querySelectorAll('.slides');
-        
-        function showSlides() {
-            slides.forEach(slide => slide.style.display = 'none'); // Hide all slides
-            slideIndex = (slideIndex + 1) % slides.length; // Increment the index
-            slides[slideIndex].style.display = 'block'; // Show the current slide
-        }
-
-        slides[slideIndex].style.display = 'block'; // Show the first slide
-        setInterval(showSlides, 3000); // Change slide every 3 seconds
-    }
-
     const maxMessages = 100; // Maximum number of messages
-        const messageExpiryDays = 3; // Message expiry in days
+    const messageExpiryDays = 3; // Message expiry in days
 
-        // Load messages from localStorage on page load
-        window.onload = function() {
-            const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
-            const currentTime = new Date().getTime();
-            
-            // Display valid messages
-            messages.forEach(msg => displayMessage(msg.username, msg.text, msg.timestamp));
-
-            // Load user data
-            document.getElementById('displayUsername').textContent = sessionStorage.getItem('username') || 'Username';
-            document.getElementById('displayEmail').textContent = 'Email: ' + (sessionStorage.getItem('email') || 'user@example.com');
-            document.getElementById('displayPronoun').textContent = 'Pronoun: ' + (sessionStorage.getItem('pronoun') || 'He/Him');
-        };
-
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value;
-            const username = sessionStorage.getItem('username') || 'User';
-
-            if (message) {
-                const newMessage = { username: username, text: message, timestamp: new Date().getTime() };
-                const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
-                messages.push(newMessage);
-                if (messages.length > maxMessages) {
-                    messages.shift(); // Remove the oldest message
-                }
-                localStorage.setItem('chatMessages', JSON.stringify(messages));
-                displayMessage(username, message, newMessage.timestamp);
-                input.value = ''; // Clear the input
-                document.getElementById('messageDisplay').scrollTop = document.getElementById('messageDisplay').scrollHeight; // Scroll to the bottom
+    // Load messages from localStorage on page load
+    window.onload = function() {
+        const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        const currentTime = new Date().getTime();
+        
+        // Display valid messages
+        messages.forEach(msg => {
+            const messageAge = (currentTime - msg.timestamp) / (1000 * 3600 * 24); // Convert to days
+            if (messageAge <= messageExpiryDays) {
+                displayMessage(msg.username, msg.text, msg.timestamp);
             }
-        }
+        });
 
-        function displayMessage(username, message, timestamp) {
-            const display = document.getElementById('messageDisplay');
-            const messageElement = document.createElement('div');
-            messageElement.textContent = username + ': ' + message + ' (' + new Date(timestamp).toLocaleString() + ')';
-            display.appendChild(messageElement);
+        // Load user data
+        document.getElementById('displayUsername').textContent = sessionStorage.getItem('username') || 'Username';
+        document.getElementById('displayEmail').textContent = 'Email: ' + (sessionStorage.getItem('email') || 'user@example.com');
+        document.getElementById('displayPronoun').textContent = 'Pronoun: ' + (sessionStorage.getItem('pronoun') || 'He/Him');
+    };
+
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const message = input.value;
+        const username = sessionStorage.getItem('username') || 'User';
+
+        if (message) {
+            const newMessage = { username: username, text: message, timestamp: new Date().getTime() };
+            const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+            messages.push(newMessage);
+            if (messages.length > maxMessages) {
+                messages.shift(); // Remove the oldest message
+            }
+            localStorage.setItem('chatMessages', JSON.stringify(messages));
+            displayMessage(username, message, newMessage.timestamp);
+            input.value = ''; // Clear the input
+            document.getElementById('messageDisplay').scrollTop = document.getElementById('messageDisplay').scrollHeight; // Scroll to the bottom
         }
+    }
+
+    function displayMessage(username, message, timestamp) {
+        const display = document.getElementById('messageDisplay');
+        const messageElement = document.createElement('div');
+        messageElement.textContent = username + ': ' + message + ' (' + new Date(timestamp).toLocaleString() + ')';
+        display.appendChild(messageElement);
+    }
+
+    function showPage(page) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(p => p.style.display = 'none');
+        document.getElementById(page).style.display = 'block';
+    }
 
     // Load initial data
     displayWelcomeMessage();
-    loadMessages();
-    loadSlideshow();
 </script>
+
 </body>
 </html>
+
