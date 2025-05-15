@@ -46,6 +46,10 @@
         .login-button:hover {
             background-color: #5a4cad;
         }
+        .error-message {
+            color: red;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -59,6 +63,7 @@
     <input class="input-field" id="usernameInput" type="text" placeholder="Enter your username" />
     <input class="input-field" id="passwordInput" type="password" placeholder="Enter your password" />
     <button class="login-button" onclick="login()">Login</button>
+    <div class="error-message" id="errorMessage"></div>
 </section>
 
 <script>
@@ -72,12 +77,13 @@
     function login() {
         const username = document.getElementById('usernameInput').value;
         const password = document.getElementById('passwordInput').value;
+        const errorMessage = document.getElementById('errorMessage');
 
         if (users[username] && users[username] === password) {
             sessionStorage.setItem('username', username);
             window.location.href = 'dash.html'; // Redirect to the dashboard
         } else {
-            alert('Invalid username or password.');
+            errorMessage.textContent = 'Invalid username or password.';
         }
     }
 </script>
