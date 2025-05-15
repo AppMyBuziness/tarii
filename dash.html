@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Purple App</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -126,31 +128,66 @@
         document.getElementById('displayPronoun').textContent = 'Pronoun: ' + (sessionStorage.getItem('pronoun') || 'He/Him');
     };
 
-    function sendMessage() {
-        const input = document.getElementById('messageInput');
-        const message = input.value;
-        const username = sessionStorage.getItem('username') || 'User';
+   
 
-        if (message) {
-            const newMessage = { username: username, text: message, timestamp: new Date().getTime() };
-            const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
-            messages.push(newMessage);
-            if (messages.length > maxMessages) {
-                messages.shift(); // Remove the oldest message
-            }
-            localStorage.setItem('chatMessages', JSON.stringify(messages));
-            displayMessage(username, message, newMessage.timestamp);
-            input.value = ''; // Clear the input
-            document.getElementById('messageDisplay').scrollTop = document.getElementById('messageDisplay').scrollHeight; // Scroll to the bottom
-        }
-    }
+    // Firebase configuration
+const firebaseConfig = {
+ apiKey: "AIzaSyAg6VgRk_sNfPMz3xw6C-p1Dewwkz9oXzA",
+  authDomain: "ambs-1a44b.firebaseapp.com",
+  projectId: "ambs-1a44b",
+  storageBucket: "ambs-1a44b.firebasestorage.app",
+  messagingSenderId: "973073641416",
+  appId: "1:973073641416:web:42f62114f7618154119afd",
+  measurementId: "G-855QH7JJK2"
+};
 
-    function displayMessage(username, message, timestamp) {
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// Load messages from Firebase on page load
+window.onload = function() {
+    loadMessages();
+    // Load user data
+    document.getElementById('welcomeMessage').textContent = 'Welcome, ' + (sessionStorage.getItem('username') || 'User');
+};
+
+function loadMessages() {
+    const messagesRef = database.ref('messages');
+    messagesRef.on('value', (snapshot) => {
+        const messages = snapshot.val();
         const display = document.getElementById('messageDisplay');
-        const messageElement = document.createElement('div');
-        messageElement.textContent = username + ': ' + message + ' (' + new Date(timestamp).toLocaleString() + ')';
-        display.appendChild(messageElement);
+        display.innerHTML = ''; // Clear existing messages
+        for (let key in messages) {
+            const msg = messages[key];
+            displayMessage(msg.username, msg.text, msg.timestamp);
+        }
+    });
+}
+
+function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value;
+    const username = sessionStorage.getItem('username') || 'User';
+
+    if (message) {
+        const newMessage = {
+            username: username,
+            text: message,
+            timestamp: new Date().getTime()
+        };
+        const messagesRef = database.ref('messages');
+        messagesRef.push(newMessage); // Send message to Firebase
+        input.value = ''; // Clear the input
     }
+}
+
+function displayMessage(username, message, timestamp) {
+    const display = document.getElementById('messageDisplay');
+    const messageElement = document.createElement('div');
+    messageElement.textContent = username + ': ' + message + ' (' + new Date(timestamp).toLocaleString() + ')';
+    display.appendChild(messageElement);
+}
 
     function showPage(page) {
         const pages = document.querySelectorAll('.page');
