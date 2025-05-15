@@ -12,6 +12,24 @@
             margin: 0;
             padding: 0;
         }
+         nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s, transform 0.3s;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
         header {
             background-color: #6a5acd;
             padding: 1rem;
