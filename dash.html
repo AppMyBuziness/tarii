@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Purple App</title>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,27 +17,6 @@
             padding: 1rem;
             text-align: center;
             color: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            transition: background 0.3s, transform 0.3s;
-            background: rgba(255, 255, 255, 0.2);
-        }
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
         }
         section {
             padding: 2rem;
@@ -62,10 +39,6 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-        .send-button:hover {
-            background-color: #5a4cad;
         }
         #messageDisplay {
             max-height: 300px;
@@ -81,20 +54,10 @@
 
 <header>
     <h1>My Purple App</h1>
-    <nav>
-        <a href="dash.html" onclick="showPage('dashboard')">Dashboard</a>
-        <a href="td.html" onclick="showPage('diary')">My Diary</a>
-        <a href="affirmations.html" onclick="showPage('affirmations')">Affirmations</a>
-        <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
-        <a href="bk.html" onclick="showPage('books')">Books</a>
-        <a href="videos.html" onclick="showPage('videos')">Videos</a>
-    </nav>
 </header>
 
-<section id="dashboard" class="page">
+<section id="dashboard">
     <h2 id="welcomeMessage"></h2>
-    <p id="chatPrompt">Let's talk!</p>
-    
     <h3>Chat</h3>
     <div class="chat-container">
         <div id="messageDisplay"></div>
@@ -106,37 +69,17 @@
 </section>
 
 <script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyAg6VgRk_sNfPMz3xw6C-p1Dewwkz9oXzA",
-        authDomain: "ambs-1a44b.firebaseapp.com",
-        databaseURL: "https://ambs-1a44b-default-rtdb.firebaseio.com/",
-        projectId: "ambs-1a44b",
-        storageBucket: "ambs-1a44b.appspot.com",
-        messagingSenderId: "973073641416",
-        appId: "1:973073641416:web:42f62114f7618154119afd",
-        measurementId: "G-855QH7JJK2"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    window.onload = function() {
-        loadMessages();
-        document.getElementById('welcomeMessage').textContent = 'Welcome, ' + (sessionStorage.getItem('username') || 'User');
-    };
-
     function loadMessages() {
-        const messagesRef = database.ref('messages');
-        messagesRef.on('value', (snapshot) => {
-            const messages = snapshot.val();
-            const display = document.getElementById('messageDisplay');
-            display.innerHTML = ''; // Clear existing messages
-            for (let key in messages) {
-                const msg = messages[key];
-                displayMessage(msg.username, msg.text, msg.timestamp);
-            }
-        });
+        fetch('/messages')
+            .then(response => response.json())
+            .then(messages => {
+                const display = document.getElementById('messageDisplay');
+                display.innerHTML = '';
+                messages.forEach(msg => {
+                    displayMessage(msg.username, msg.text);
+                });
+                display.scrollTop = display.scrollHeight; // Scroll to bottom
+            });
     }
 
     function sendMessage() {
@@ -145,30 +88,28 @@
         const username = sessionStorage.getItem('username') || 'User';
 
         if (message) {
-            const newMessage = {
-                username: username,
-                text: message,
-                timestamp: new Date().getTime()
-            };
-            const messagesRef = database.ref('messages');
-            messagesRef.push(newMessage); // Send message to Firebase
-            input.value = ''; // Clear the input
+            const newMessage = { username, text: message };
+            fetch('/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newMessage)
+            })
+            .then(() => {
+                input.value = '';
+                loadMessages(); // Reload messages after sending
+            });
         }
     }
 
-    function displayMessage(username, message, timestamp) {
+    function displayMessage(username, message) {
         const display = document.getElementById('messageDisplay');
         const messageElement = document.createElement('div');
-        messageElement.textContent = username + ': ' + message + ' (' + new Date(timestamp).toLocaleString() + ')';
+        messageElement.textContent = `${username}: ${message}`;
         display.appendChild(messageElement);
-        display.scrollTop = display.scrollHeight; // Scroll to the bottom
     }
 
-    function showPage(page) {
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(p => p.style.display = 'none');
-        document.getElementById(page).style.display = 'block';
-    }
+    // Load messages on page load
+    window.onload = loadMessages;
 </script>
 
 </body>
