@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
         }
-         nav {
+        nav {
             display: flex;
             justify-content: center;
             gap: 1rem;
@@ -66,27 +66,33 @@
             padding: 1rem;
             background-color: #ffffff;
         }
+        .affirmation {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>lets talk with Tari</h1>
+    <h1>Let's Talk with Tari</h1>
     <nav>
         <a href="index.html" onclick="showPage('dashboard')">Dashboard</a>
         <a href="td.html" onclick="showPage('diary')">My Diary</a>
-        <a href="event.html" onclick="showPage('affirmations')">events</a>
+        <a href="event.html" onclick="showPage('affirmations')">Events</a>
         <a href="one.html" onclick="showPage('one-on-one')">One on One</a>
         <a href="bk.html" onclick="showPage('books')">Books</a>
         <a href="videos.html" onclick="showPage('videos')">Videos</a>
     </nav>
 </header>
 
-
 <section id="dashboard">
     <h2 id="welcomeMessage"></h2>
-    <h3>Chat</h3>
-    <iframe src="https://giphy.com/embed/UtoCv3U4FTEQFoAgTS" width="200" height="200" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/stickers/avamay-mothersday-muttertag-blumenstrau-UtoCv3U4FTEQFoAgTS"></a></p>
+    <h3>Affirmations</h3>
+    <div id="affirmationDisplay" class="affirmation"></div>
+    <iframe src="https://giphy.com/embed/UtoCv3U4FTEQFoAgTS" width="200" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+    <p><a href="https://giphy.com/stickers/avamay-mothersday-muttertag-blumenstrau-UtoCv3U4FTEQFoAgTS"></a></p>
     <div class="chat-container">
         <div id="messageDisplay"></div>
         <div>
@@ -97,6 +103,39 @@
 </section>
 
 <script>
+    const affirmations = [
+        "You are enough.",
+        "You are capable of amazing things.",
+        "You are worthy of love and respect.",
+        "You can achieve your dreams.",
+        "You have the power to change your life.",
+        "You are stronger than you think.",
+        "You are surrounded by love.",
+        "You are deserving of happiness.",
+        "You are a unique and special person.",
+        "You can overcome any challenge.",
+        "You have a bright future ahead.",
+        "You are full of potential.",
+        "You are worthy of success.",
+        "You are making a difference.",
+        "You are loved just as you are.",
+        "You can accomplish anything you set your mind to.",
+        "You are a beautiful person inside and out.",
+        "You are never alone.",
+        "You are capable of handling what comes your way.",
+        "You are an inspiration to others."
+    ];
+
+    let affirmationIndex = 0;
+
+    function showNextAffirmation() {
+        const affirmationDisplay = document.getElementById('affirmationDisplay');
+        affirmationDisplay.textContent = affirmations[affirmationIndex];
+        affirmationIndex = (affirmationIndex + 1) % affirmations.length;
+    }
+
+    setInterval(showNextAffirmation, 3000); // Change affirmation every 3 seconds
+
     function loadMessages() {
         fetch('/messages')
             .then(response => response.json())
@@ -137,7 +176,10 @@
     }
 
     // Load messages on page load
-    window.onload = loadMessages;
+    window.onload = function() {
+        loadMessages();
+        showNextAffirmation(); // Show the first affirmation
+    };
 </script>
 
 </body>
